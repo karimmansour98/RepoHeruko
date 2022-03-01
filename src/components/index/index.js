@@ -370,7 +370,7 @@ option.addEventListener("click", () => {
             <div className="footer">
               <div className="container">
                 <div className="box">
-                  <h3>Test</h3>
+                  <h3>Testt</h3>
                 
                   <p className="text">
                     Lorem ipsum, dolor sit amet consectetur adipisicing elit. Temporibus nulla rem, dignissimos iste aspernatur
