@@ -1,0 +1,145 @@
+     
+.table{
+    padding: 30px 20px;
+
+}
+      
+table {
+border-collapse: collapse;
+box-shadow: 20px 20px 20px 5px #a7bad3;
+background-color: white;
+text-align: left;
+width: 100%;
+}
+
+th {
+  background-color: #d0def2;
+  padding: 0.75rem 2rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1rem;
+  font-size: 0.7rem;
+  font-weight: 900;
+}
+
+td {
+  padding: 1rem 2rem;
+}
+
+
+td button {
+  background-color: blue;
+  font-weight: 500;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 10px;
+  box-shadow: 2px 3px 10px 0px #ccc;
+  text-decoration: none;
+  text-transform: capitalize;
+  margin: 5px;
+  outline: none;
+  border:none;
+  cursor: pointer;
+
+}
+
+td button.delete {
+  background-color: tomato;
+
+
+}
+/* //   Color alternating rows */
+tr:nth-child(even) {
+  background-color: #f3f8fe;
+}
+
+.cardbox{
+    position: relative;
+    width: 100%;
+    padding: 20px;
+    display: grid;
+    grid-template-columns: repeat(2 , 1fr);
+   grid-gap: 30px;
+  }
+.cardbox .card {
+  position: relative;
+  background-color: white;
+  padding: 30px 50px;
+  box-shadow: 0 7px 25px rgba((0,0,0,08), green, blue, alpha);
+  cursor: pointer;
+  border-radius: 20px;
+  display: flex;
+  justify-content: space-between;
+  background-color: wheat;
+}
+
+.cardbox .card:hover {
+background-color: rgb(109, 109, 201);
+}
+
+.cardbox .card:hover span ,
+.cardbox .card:hover p ,
+.cardbox .card:hover .icon {
+color: white;
+}
+
+.cardbox .card span {
+position: relative;
+font-weight: 500;
+color: rgb(87, 87, 212);
+font-size: 2.5em;
+}
+.cardbox .card p {
+color: black;
+font-size: 1.1em;
+margin-top: 5px;
+}
+
+.cardbox .card .icon {
+ font-size: 3.5em;
+ color: green;
+}
+
+
+
+
+
+.pagination{
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 10px 20px 40px 0px;
+
+}
+.pagination ul{
+list-style: none;
+display: flex;
+flex-direction: row;
+flex-wrap: wrap;
+background-color: transparent;
+
+}
+
+
+.pagination ul li a{
+  padding: 0.75em 1rem;
+margin: 0.25em;
+border-radius: 0.5em;
+ background-color: white;
+border: 1px solid #ccc;
+color: #000;
+box-shadow: 1px 2px 2px 0px #ccc;
+
+}
+
+.pagination ul li:hover a{
+border-color: white;
+color: black;
+font-weight: 600;
+border-color: black;
+}
+.pagination ul li.active a{
+border-color: white;
+color: black;
+font-weight: 600;
+border-color: black;
+}
