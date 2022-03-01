@@ -1,17 +1,9 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/App';
 import reportWebVitals from './reportWebVitals';
 import store from './redux/store'
 import { Provider } from 'react-redux';
-
-const setTitle = () => {
-  document.title = "Comparer votre prime gratuitement"
-}
-
-useEffect(()=> {
-  setTitle()
-},[])
 
 ReactDOM.render(
   <React.StrictMode>

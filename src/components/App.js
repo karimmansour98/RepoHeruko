@@ -1,4 +1,4 @@
-import React, { Fragment } from "react"
+import React, { Fragment, useEffect } from "react"
 import "../styles/app.css"
 import Header from "./dashboard/header"
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
@@ -10,10 +10,14 @@ import Admins from "./dashboard/user/admins";
 import Forgot from "./dashboard/user/forgot";
 import Index from "./index/index";
 
-
+const setTitle = () => {
+  document.title = "Comparer votre prime gratuitement"
+}
 
 const App = () => {
-
+  useEffect(()=> {
+    setTitle()
+  },[])
  
   return (
 
