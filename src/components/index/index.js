@@ -214,7 +214,7 @@ option.addEventListener("click", () => {
                                   <li>1000</li>
                                   <li>1500</li>
                                   <li>2000</li>
-                                  <li>3000</li>
+                                  <li>2500</li>
                                 </ul>
                                                     
                           </div>
@@ -390,13 +390,13 @@ option.addEventListener("click", () => {
                     <i className="fas fa-phone-volume fa-fw"></i>
                     <div className="info">
                       <span>Whatsapp</span>
-                      <span><a href="https://wa.me/+3374863625" target="_blank">+33 74863625</a></span>
+                      <span><a href="https://wa.me/+33748636215" target="_blank">+33 748636215</a></span>
                     </div>
                   </div>
                 </div>
                
               </div>
-              <p className="copyright">Made With &lt;3 By Elzero</p>
+              <p className="copyright">Compare Prime</p>
             </div>
             {/* <!-- End Footer --> */}
         
