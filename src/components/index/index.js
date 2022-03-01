@@ -96,7 +96,7 @@ option.addEventListener("click", () => {
               {loading && loader()}
               {successMsg == "created" && Done()}
         
-                <a href="#" className="logo">Test</a>
+                <a href="#" className="logo">Compare Prime</a>
         
                 <div className="nav-links">
                   <div className="drop-down-lang" >
@@ -370,27 +370,27 @@ option.addEventListener("click", () => {
             <div className="footer">
               <div className="container">
                 <div className="box">
-                  <h3>Testt</h3>
+                  <h3>Compare Prime</h3>
                 
-                  <p className="text">
+                  {/* <p className="text">
                     Lorem ipsum, dolor sit amet consectetur adipisicing elit. Temporibus nulla rem, dignissimos iste aspernatur
-                  </p>
+                  </p> */}
                 </div>
                 
                 <div className="box">
-                  <div className="line">
+                  {/* <div className="line">
                     <i className="fas fa-map-marker-alt fa-fw"></i>
                     <div className="info">Egypt, Giza, Inside The Sphinx, Room Number 220</div>
                   </div>
                   <div className="line">
                     <i className="far fa-clock fa-fw"></i>
                     <div className="info">Business Hours: From 10:00 To 18:00</div>
-                  </div>
+                  </div> */}
                   <div className="line">
                     <i className="fas fa-phone-volume fa-fw"></i>
                     <div className="info">
-                      <span>+20123456789</span>
-                      <span>+20198765432</span>
+                      <span>Whatsapp</span>
+                      <span><a href="https://wa.me/+3374863625" target="_blank">+33 74863625</a></span>
                     </div>
                   </div>
                 </div>
