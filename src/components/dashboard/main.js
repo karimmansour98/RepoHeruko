@@ -1,10 +1,7 @@
 import React, { Fragment, useEffect, useState } from "react"
 import { useTranslation } from 'react-i18next';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import myClassName from 'classnames';
+import { useNavigate } from 'react-router-dom';
 import { isAuthentication, Logout } from '../../shared/auth';
-import { getLocalStorage } from "../../shared/localStorage";
-import { use } from "i18next";
 import { useDispatch, useSelector } from "react-redux";
 import "../../styles/main.css";
 import { CLEAR_MESSAGE } from "../../redux/constans/message";
@@ -20,10 +17,6 @@ const Main = () => {
 
     useEffect(() => {
         dispatch({ type: CLEAR_MESSAGE })
- 
-        if (!isAuthentication()) {
-            navigate("/admin")
-        }
 
     }, [])
 

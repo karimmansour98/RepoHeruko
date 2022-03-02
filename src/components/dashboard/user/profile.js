@@ -30,7 +30,7 @@ const Profile = () => {
             firstname: user.firstname || "",
             lastname: user.lastname || "",
             email: user.email || "",
-            rule: "",
+            rule: user.rule || "admin",
             password: "",
         })
 
@@ -142,7 +142,7 @@ const Profile = () => {
 
                                         <div className="input-box">
                                             <span className="details">password</span>
-                                            <input type="password" name="password" placeholder="Enter your password" required="" />
+                                            <Field type="password" name="password" placeholder="Enter your password" required="" />
                                         </div>
                                     
 

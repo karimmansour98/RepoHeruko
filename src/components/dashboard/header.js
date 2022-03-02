@@ -11,7 +11,7 @@ import { getCookie } from "../../shared/cookie";
 const Header = (props) => {
    const navigate = useNavigate();
 
-   useEffect(() => {
+   useEffect(() => { 
       if (!isAuthentication()) {
          navigate("/admin/login")
          return
