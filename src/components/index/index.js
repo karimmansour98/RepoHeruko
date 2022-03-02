@@ -250,11 +250,11 @@ option.addEventListener("click", () => {
 
 
                         <div className="input-field button">
-                          <input onClick={() => {  setFranchise({...Franchise , sub : true})}  } disabled={(!dirty || !isValid || loading)} type="submit" value={t("calculate")} />
+                          <input onClick={() => {  setFranchise({...Franchise , sub : true})}  }  type="submit" value={t("calculate")} />
                         </div>
 
 
-
+                             {/* disabled={(!dirty || !isValid || loading)} */}
                       </Form>
 
 
