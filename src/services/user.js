@@ -7,9 +7,9 @@ const config = {
     }  
 }
 
-// const EditAccount = async (id , data , con) => {
-//     return  await  axios.put(`${Host.BACKEND}${ApiEndpoints.AuthEndpoints.route}${ApiEndpoints.AuthEndpoints.edit}/${id}`, data , { headers : {...config.headers , ...con} } )
-// }
+const EditAccount = async (id , data , con) => {
+    return  await  axios.put(`${Host.BACKEND}${ApiEndpoints.UserEndpoints.route}${ApiEndpoints.UserEndpoints.edit}/${id}`, data , { headers : {...config.headers , ...con} } )
+}
 
 
 const List = async (filter , con) => {
@@ -26,5 +26,5 @@ const Image = async (id , data , con) => {
 
   
 export {
-    Count , List 
+    Count , List  , Image , EditAccount
 }

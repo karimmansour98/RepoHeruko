@@ -11,9 +11,8 @@ const setAuthentication = (token , user ) => {
 } 
 
 const isAuthentication = () => {
- 
+
     try { 
-           
         if (getLocalStorage("user") && getCookie("token")) {
             if((new Date()/1000) < Jwt_decode(getCookie("token")).exp){
 

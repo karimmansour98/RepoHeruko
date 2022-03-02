@@ -12,7 +12,6 @@ const Header = (props) => {
    const navigate = useNavigate();
 
    useEffect(() => {
-
       if (!isAuthentication()) {
          navigate("/admin/login")
          return
@@ -49,7 +48,6 @@ const Header = (props) => {
          e.target.parentElement.parentElement.classList.toggle("active")
       else e.target.parentElement.classList.toggle("active")
   }
-
 
 
    return (
@@ -150,25 +148,6 @@ const Header = (props) => {
                <div className="notifications">
                   <i className="far fa-bell"></i>
                   <span>{Contact}</span>
-               </div>
-
-               <div className="language">
-
-                  <a href="#">{i18n.language || t("Language")}</a>
-                  <i className="fa-solid fa-chevron-down"></i>
-
-                  <ul>
-                     <li onClick={() => {i18n.changeLanguage("en")}}  ><a href="#"  >{t("English")}</a> </li>
-                     <li onClick={() => {i18n.changeLanguage("ar")}}  ><a href="#"  >{t("Arabic")}</a> </li>
-                  </ul>
-
-               </div>
-
-               <div className="search-box">
-                  <i className="fa fa-search"></i>
-                  <div className="input-box">
-                     <input type="text" placeholder="Search..." />
-                  </div>
                </div>
 
 

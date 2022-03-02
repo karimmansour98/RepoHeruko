@@ -1,4 +1,4 @@
-import { COUNT, GET_CONTACTS, COUNT_NAV, VIEW, DELETE, COUNT_PAG, GET_ALl_CONTACTS } from "../constans/contact"
+import { COUNT, GET_CONTACTS, COUNT_NAV, VIEW, DELETE, COUNT_PAG, GET_ALl_CONTACTS, VIEW_ALL } from "../constans/contact"
 
 const INITIAL_STATE = {
     count: 0,
@@ -40,21 +40,39 @@ const contactReducer = (state = INITIAL_STATE, action) => {
                 count_pag: action.payload
             }
         case VIEW:
-            const index = state.contacts.findIndex(c => c._id === action.payload)
-            state.contacts[index].viewed = true
-
-            return {
-                ...state,
-                contacts: state.contacts
+            const index = state.contacts.findIndex(c => c._id === action.payload)           
+           if(!state.contacts[index].viewed){
+                state.contacts[index].viewed = true
+                state.count_nav = state.count_nav - 1
             }
 
+            return {
+                ...state,
+                contacts: state.contacts ,
+                count_nav: state.count_nav
+
+            }
+            case VIEW_ALL:
+                const indexA = state.all_contacts.findIndex(c => c._id === action.payload)           
+               if(!state.all_contacts[indexA].viewed){
+                    state.all_contacts[indexA].viewed = true
+                    state.count_nav = state.count_nav - 1
+                }
+    
+                return {
+                    ...state,
+                    all_contacts: state.all_contacts ,
+                    count_nav: state.count_nav
+                }
+    
         case DELETE:
             const indexD = state.contacts.findIndex(c => c._id === action.payload)
-            const newContacts = state.contacts.slice(indexD, 1)
+            state.contacts.splice(indexD, 1)
 
             return {
                 ...state,
-                contacts: state.contacts
+                contacts: state.contacts ,
+                count: state.count - 1
             }
         default: return state
     }

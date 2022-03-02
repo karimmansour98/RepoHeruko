@@ -4,10 +4,12 @@ import {  useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
 import "../../styles/main.css";
 import { CLEAR_MESSAGE } from "../../redux/constans/message";
-import { delete_contact, get_all_contacts,get_contact_Count_pag, view_contact } from "../../redux/actions/contact";
+import { delete_contact, get_all_contacts,get_contact_Count_pag, view_all_contact, view_contact } from "../../redux/actions/contact";
 import { loader } from "../../shared/elements";
 import { extractDesk } from "../../shared/funs";
 import myClassNames from 'classnames';
+import { getCookie } from "../../shared/cookie";
+import { isAuthentication } from "../../shared/auth";
 
 
 const Contacts = () => {
@@ -16,15 +18,17 @@ const Contacts = () => {
     useEffect(() => {
         dispatch({ type: CLEAR_MESSAGE })
 
-        // if (!isAuthentication()) {
-        //     navigate("/admin/login")
-        // }
+        if (!isAuthentication()) {
+            navigate("/admin/login")
+        }
 
     }, [])
 
     const [Count , setCount] = useState(0)
     const [Pages, setPages] = useState({ pages: ["", "", ""], currentPage: 1 })
     const [Contacts , setContacts] = useState(0)
+    const [showDel , setshowDel] = useState(false)
+    const [Contact , setContact] = useState({})
 
     const dispatch = useDispatch() 
     const { t } = useTranslation();
@@ -32,20 +36,14 @@ const Contacts = () => {
     const { loading } = useSelector(state => state.loading)
     const { count_pag , all_contacts } = useSelector(state => state.contact)
 
-   // const authorization = isAuthentication() ? { "Authorization": `bearer ${getCookie("token")}` } : [{ _id: "" }]
-    const authorization = { "Authorization": "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJydWxlIjoic3VwZXJBZG1pbiIsImlhdCI6MTY0NTk3ODIzNiwiZXhwIjoxNjQ2NTgzMDM2fQ.hywA1096FdswW-rWOFgDU9pUa8SdFcfgV_MejtdoX3M"}
-  //  const user = localStorage.getItem("user") ? getLocalStorage("user") : [{ _id: "" }]
-
-
+    const authorization = isAuthentication() ? { "Authorization": `bearer ${getCookie("token")}` } : [{ _id: "" }]
 
 
     useEffect(() => {
-
-        const skip = Pages.currentPage == 1 ? 0 : ((Pages.currentPage - 1) * limit)
-
-             dispatch(get_contact_Count_pag({ filter : '{"name" : { "$ne": "xxxlxxx" }}' }  , authorization))
-             dispatch(get_all_contacts({ filter : '{"name" : { "$ne": "xxxlxxx" }}' }  , authorization))
-    }, [dispatch])
+          const skip = Pages.currentPage == 1 ? 0 : ((Pages.currentPage - 1) * limit)
+        dispatch(get_contact_Count_pag({ filter : '{"name" : { "$ne": "xxxlxxx" }}' }  , authorization))
+        dispatch(get_all_contacts({ filter : '{"name" : { "$ne": "xxxlxxx" }}'  , limit  , skip , sort : '{"fullname" : 1}'}  , authorization))
+    }, [dispatch , Pages.currentPage])
 
     useEffect(() => {
               setContacts(all_contacts)
@@ -54,32 +52,52 @@ const Contacts = () => {
 
  
     useEffect(() => {
+
         setPages((Pages) => {
-            Pages.pages.length = Math.ceil(count_pag / limit)
+            Pages.pages.length = Math.ceil(Count / limit)
             Pages.pages.fill("page")
             return { ...Pages, pages: Pages.pages }
         })
-    }, [count_pag])
+    }, [Count])
 
 
-   const viewContact = (id) => {
-      dispatch(view_contact(id , authorization))  
-   }
-
-   const deleteContact = (id) => {
-       const conf = window.confirm(t("Are you sure"))
-        if(conf){
-            dispatch(delete_contact(id , authorization))
-           
-        }
-   }
- 
-
+    const viewContact = (id, contact) => {
+        dispatch(view_all_contact(id , authorization))  
+  
+        setContact(contact)
+        setshowDel(true)
+     }
+  
+     const deleteContact = (id ) => {
+         const conf = window.confirm(t("Are you sure"))
+          if(conf){
+              dispatch(delete_contact(id , authorization))
+          }
+     }
+  
+       const View = () => 
+       
+       Contact && Contact.fullname && <Fragment>
+          
+          <div className="confirmed" style={{ display: "block" }} id="confirmed">
+              <h5>Contact</h5>
+              <p style={{padding : "3px 0"}}>fullname : {Contact.fullname}</p>
+              <p style={{padding : "3px 0"}}>email : {Contact.email}</p>
+              <p style={{padding : "3px 0"}}>phone : {Contact.phone}</p>
+              <p style={{padding : "3px 0"}}>naissance : {Contact.naissance}</p>
+              <p style={{padding : "3px 0"}}>franchise : {Contact.franchise}</p>
+              <p style={{padding : "3px 0"}}>fullname : {Contact.fullname}</p>
+              <p style={{padding : "3px 0"}}>npa : {Contact.npa}</p> 
+              <button onClick={() => {
+                  setshowDel(false)
+              }
+              } >{t("OK")}</button>
+          </div></Fragment>
   
 
 
    
-   const limit = 2
+   const limit = 3
  
 
    const paginations = []
@@ -88,7 +106,6 @@ const Contacts = () => {
 
        const currentPage = Pages.currentPage
        const pagesLength = Pages.pages.length
-
 
        if (pagesLength > 0) {
 
@@ -146,6 +163,7 @@ const Contacts = () => {
             <main>
 
             {loading && loader()}
+            {showDel && View()}
 
 
                 {all_contacts && Contacts && Contacts.length > 0 &&
@@ -167,7 +185,7 @@ const Contacts = () => {
                             <tbody>
 
                             {
-                                Contacts.map((contact, ci) => {
+                                Contacts.map((contact, ci) => { 
                                     return (
                                         <tr key={ci}>
                                             <td>{extractDesk(contact.fullname , 10)}</td>
@@ -177,7 +195,7 @@ const Contacts = () => {
                                             <td>{extractDesk(contact.franchise , 10)}</td>
                                             <td>{extractDesk(contact.npa , 10)}</td>
                                             <td>{extractDesk(contact.viewed ? "yes" : "no" , 10)}</td>
-                                            <td><button className="view" href="" onClick={() => {viewContact(contact._id)}}  >view</button>
+                                            <td><button className="view" href="" onClick={() => {viewContact(contact._id , contact)}}  >view</button>
                                              <button className="delete" href=""  onClick={() => {deleteContact(contact._id)}}  >delete</button></td>
                                         </tr>
                                     )
@@ -195,14 +213,7 @@ const Contacts = () => {
                
                 <div className="pagination">
                     <ul>
-                        <li><a href="#">Prev</a></li>
-                        <li><a href="#">1</a></li>
-                        <li><a href="#">2</a></li>
-                        <li><a href="#">...</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#">4</a></li>
-                        <li><a href="#">Next</a></li>
-
+                       {paginations}
                     </ul>
                 </div>
 

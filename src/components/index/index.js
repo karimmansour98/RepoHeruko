@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useRef } from "react"
+import React, { Fragment, useEffect, useRef, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import * as yup from 'yup'
 import { Field, Formik, Form } from "formik"
@@ -15,6 +15,8 @@ const Index = () => {
   const navigate = useNavigate()
   const FormikRef = useRef()
   const { t, i18n } = useTranslation();
+
+  const [Franchise , setFranchise] = useState({touch : false , sub : false})
 
   useEffect(() => {
     dispatch({ type: CLEAR_MESSAGE })
@@ -40,15 +42,14 @@ const Index = () => {
   }
 
   const LoginValidator = yup.object().shape({
-    email: yup.string().required(t("email field is required")).email("email must be email"),
+    email: yup.string().required(t("email field is required")).email(t("email must be email")),
     fullname: yup.string().required(t("fullname field is required")),
     phone: yup.string().required(t("phone field is required"))
-    .test('start', 'phone number must start with +41', val =>  val && val.startsWith("+41") )
-    .test('length', 'phone number must be 9 digits', val =>  val && val.length ===  12 ),
+    .test('start', t('phone number must start with +41'), val =>  val && val.startsWith("+41") )
+    .test('length', t('phone number must be 9 digits'), val =>  val && val.length ===  12 ),
     npa: yup.string().required(t("postcode or home address")),
     naissance: yup.string().required(t("year of birth field is required")),
   })
-
 
   const closeAlert = () => {
     dispatch({ type: CLEAR_MESSAGE })
@@ -66,6 +67,7 @@ options.forEach((option) => {
 option.addEventListener("click", () => {
     setTimeout(() => {
         selectedOption.innerHTML = option.innerHTML;
+        setFranchise({...Franchise ,touch : true})
         FormikRef.current.setFieldValue("franchise" , option.innerHTML)
     }, 300);  
 
@@ -84,6 +86,7 @@ option.addEventListener("click", () => {
       }
       } >{t("OK")}</button>
     </div></Fragment>
+
 
     return (
 
@@ -157,7 +160,10 @@ option.addEventListener("click", () => {
                   initialValues={initialValues}
                   onSubmit={onSubmit}
                   validationSchema={LoginValidator}
-                  innerRef={FormikRef}>
+                  innerRef={FormikRef}
+                  validateOnMount={true}
+                  validateOnChange={true}
+                  >
 
                   {
                     ({ touched, errors, isValid, dirty }) => (
@@ -171,7 +177,7 @@ option.addEventListener("click", () => {
                           <div className="input-field">
                             <label htmlFor="">{t("Fullname")}*</label>
                             <div>
-                             <Field type="text" name="fullname" placeholder={t("Enter your fullname")} required="" />
+                             <Field autoComplete="new-fullname" type="text" name="fullname" placeholder={t("Enter your fullname")} />
                               <i className="fa-solid fa-user"></i>
                             </div>
                             <small className="input-error" style={{color: "tomato" , display: errors.fullname ? "block" : "none" }} >{touched.fullname && errors.fullname}</small>
@@ -182,7 +188,7 @@ option.addEventListener("click", () => {
                           <div className="input-field">
                             <label htmlFor="">{t("Email Address")}*</label>
                             <div>
-                             <Field type="text" name="email" placeholder={t("Enter your email")} required="" />
+                             <Field autoComplete="new-email" type="text" name="email" placeholder={t("Enter your email")} required="" />
                              <i className="fa-solid fa-envelope"></i>                            </div>
                             <small className="input-error" style={{color: "tomato" , display: errors.email ? "block" : "none" }} >{touched.email && errors.email}</small>
                           </div>
@@ -193,7 +199,7 @@ option.addEventListener("click", () => {
                           <div className="input-field">
                             <label htmlFor="">{t("Phone Number")}*</label>
                             <div>
-                             <Field type="tel" name="phone" placeholder={t("Enter your phone number")} required="" />
+                             <Field autoComplete="new-tell" type="tel" name="phone" placeholder={t("Enter your phone number")} required="" />
                               <i className="fa-solid fa-phone"></i>
                             </div>
                             <small className="input-error" style={{color: "tomato" , display: errors.phone ? "block" : "none" }} >{touched.phone && errors.phone}</small>
@@ -204,7 +210,7 @@ option.addEventListener("click", () => {
     
         
                           <div className="input-wrapper">
-                            <span>{t("Franchise")}</span>
+                            <span>{t("Franchise")}*</span>
                           
                                 <p className="selected-option" onClick={() => {handleSelectBox()}}>{t("Franchise")}</p>
         
@@ -216,16 +222,17 @@ option.addEventListener("click", () => {
                                   <li>2000</li>
                                   <li>2500</li>
                                 </ul>
-                                                    
+                                <small className="input-error" style={{color: "tomato" , display: (!Franchise.touch && Franchise.sub) ? "block" : "none" }}>{t("Franchise field is required")}</small>
+             
                           </div>
         
-                        
+                          
                             
                           <div className="input-wrapper">
                           <div className="input-field">
                             <label htmlFor="">{t("postcode or home address")}*</label>
                             <div>
-                             <Field type="tel" name="npa" placeholder={t("Enter your postcode or home address")} required="" />
+                             <Field autoComplete="new-npa" type="tel" name="npa" placeholder={t("Enter your postcode or home address")} required="" />
                              <i className="fa-solid fa-envelopes-bulk"></i>                           </div>
                             <small className="input-error" style={{color: "tomato" , display: errors.npa ? "block" : "none" }} >{touched.npa && errors.npa}</small>
                           </div>
@@ -235,7 +242,7 @@ option.addEventListener("click", () => {
                           <div className="input-field">
                             <label htmlFor="">{t("year of birth")}*</label>
                             <div>
-                             <Field type="tel" name="naissance" placeholder={t("Enter your year of birth")} required="" />
+                             <Field autoComplete="new-date" type="date" name="naissance" placeholder={t("Enter your year of birth")} required="" />
                              <i className="fa-solid fa-cake-candles"></i>                            </div>
                             <small className="input-error" style={{color: "tomato" , display: errors.naissance ? "block" : "none" }} >{touched.naissance && errors.naissance}</small>
                           </div>
@@ -243,7 +250,7 @@ option.addEventListener("click", () => {
 
 
                         <div className="input-field button">
-                          <input disabled={(!dirty || !isValid || loading)} type="submit" value={t("calculate")} />
+                          <input onClick={() => {  setFranchise({...Franchise , sub : true})}  } disabled={(!dirty || !isValid || loading)} type="submit" value={t("calculate")} />
                         </div>
 
 

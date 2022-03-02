@@ -1,7 +1,7 @@
 
 const Host = {
   ROOT: "http://localhost:3000",
-  BACKEND: "http://api.compareprime.com",
+  BACKEND: "143.198.185.136",
   PREFIX: "/v1/api", 
 };
 
@@ -14,8 +14,8 @@ const ApiEndpoints = {
     create: `/create`,  
     me: `/me`,  
     edit: `/edit`,
-    image: `/image/:id`,
-    suspension: `/suspension/:id`,
+    image: `/image`,
+    suspension: `/suspension`,
     forgotPassword: `/forgot-password`,
     count: `/count`,
 
@@ -23,8 +23,8 @@ const ApiEndpoints = {
 
   FileEndpoints: {
     route: `${Host.PREFIX}/file`,
-    getSingleImageView: `/get-single-image/:id/view`,
-    getSingleImageDownload: `/get-single-image/:id/download`,
+    getSingleImageView: `/get-single-image`,
+    getSingleImageDownload: `/get-single-image`,
     createSingleImage: `/create-single-image`,
   },
   contactEndpoints: {

@@ -20,7 +20,7 @@ const Main = () => {
 
     useEffect(() => {
         dispatch({ type: CLEAR_MESSAGE })
-
+ 
         if (!isAuthentication()) {
             navigate("/admin")
         }
@@ -31,6 +31,8 @@ const Main = () => {
     const [Contacts , setContacts] = useState(0)
     const [ContactN , setContactN] = useState(0)
     const [AdminN , setAdminsN] = useState(0)
+    const [showDel , setshowDel] = useState(false)
+    const [Contact , setContact] = useState({})
 
     const dispatch = useDispatch() 
     const { t } = useTranslation();
@@ -42,10 +44,9 @@ const Main = () => {
    const authorization = isAuthentication() ? { "Authorization": `bearer ${getCookie("token")}` } : [{ _id: "" }]
 
     useEffect(() => {
-        console.log("e");
         dispatch(get_user_Count( { filter : '{"name" : { "$ne": "xxxlxxx" }}' }  , authorization)) 
         dispatch(get_contact_Count( { filter : '{"name" : { "$ne": "xxxlxxx" }}' } , authorization))       
-        dispatch(get_contact( { filter : '{"name" : { "$ne": "xxxlxxx" }}' , limit : 10} , authorization))       
+        dispatch(get_contact( { filter : '{"name" : { "$ne": "xxxlxxx" }}' , limit : 10} , authorization))   
     }, [dispatch])
 
     useEffect(() => {
@@ -55,24 +56,47 @@ const Main = () => {
     }, [userN , contactN , contacts])
 
  
-   const viewContact = (id) => {
+   const viewContact = (id, contact) => {
       dispatch(view_contact(id , authorization))  
+
+      setContact(contact)
+      setshowDel(true)
    }
 
-   const deleteContact = (id) => {
+   const deleteContact = (id ) => {
        const conf = window.confirm(t("Are you sure"))
         if(conf){
             dispatch(delete_contact(id , authorization))
-           
         }
    }
- 
+
+     const View = () => 
+     
+     Contact && Contact.fullname && <Fragment>
+        
+        <div className="confirmed" style={{ display: "block" }} id="confirmed">
+            <h5>Contact</h5>
+            <p style={{padding : "3px 0"}}>fullname : {Contact.fullname}</p>
+            <p style={{padding : "3px 0"}}>email : {Contact.email}</p>
+            <p style={{padding : "3px 0"}}>phone : {Contact.phone}</p>
+            <p style={{padding : "3px 0"}}>naissance : {Contact.naissance}</p>
+            <p style={{padding : "3px 0"}}>franchise : {Contact.franchise}</p>
+            <p style={{padding : "3px 0"}}>fullname : {Contact.fullname}</p>
+            <p style={{padding : "3px 0"}}>npa : {Contact.npa}</p> 
+            <button onClick={() => {
+                setshowDel(false)
+            }
+            } >{t("OK")}</button>
+        </div></Fragment>
+
+
     return (
 
         <Fragment> 
             <main>
 
             {loading && loader()}
+            {showDel && View()}
 
                 <div className="cardbox">
 
@@ -95,10 +119,10 @@ const Main = () => {
                         <div className="card">
                             <div>
                                 <span>{ContactN}</span>
-                                <p>Users</p>
+                                <p>Contacts</p>
                             </div>
                             <div className="icon">
-                                <i className="fa-solid fa-user"></i>
+                               <i className="fa-solid fa-file-signature"></i>
 
                             </div>
                         </div>
@@ -108,7 +132,7 @@ const Main = () => {
 
                 {contacts && Contacts  &&
 
-                    <div className="table">
+                    <div className="table" style={{ overflowX : "auto" }}>
                         <table>
                             <thead>
                                 <tr>
@@ -135,7 +159,7 @@ const Main = () => {
                                             <td>{extractDesk(contact.franchise , 10)}</td>
                                             <td>{extractDesk(contact.npa , 10)}</td>
                                             <td>{extractDesk(contact.viewed ? "yes" : "no" , 10)}</td>
-                                            <td><button className="view" href="" onClick={() => {viewContact(contact._id)}}  >view</button>
+                                            <td><button className="view" href="" onClick={() => {viewContact(contact._id , contact)}}  >view</button>
                                              <button className="delete" href=""  onClick={() => {deleteContact(contact._id)}}  >delete</button></td>
                                         </tr>
                                     )

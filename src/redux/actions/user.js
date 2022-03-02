@@ -1,10 +1,11 @@
 
-import { COUNT , COUNT_PAG, FORGOT, GET, LOGIN } from "../constans/user"
+import { COUNT , COUNT_PAG, FORGOT, GET, LOGIN , EDITE } from "../constans/user"
 import { SHOW_ERROR_MESSAGE, SHOW_SUCCESS_MESSAGE, CLEAR_MESSAGE } from "../constans/message"
 import { START_LOADING, STOP_LOADING } from "../constans/loading"
-import { Count , List } from "../../services/user"
+import { Count , List , Image, EditAccount } from "../../services/user"
 import { ForgotAuth, LoginAuth } from "../../services/auth"
 import { setAuthentication } from "../../shared/auth"
+import { getLocalStorage, setLocalStorage } from "../../shared/localStorage"
 
 
 const get_user_Count_pag = (filter , con) => async dispatch => {
@@ -120,71 +121,67 @@ const ForgotAuths = (values) => async dispatch => {
 }
 
 
-// const EditAccounts = (userId , values , authorization) => async dispatch => {
-//     dispatch({ type: START_LOADING })
+const EditAccounts = (userId , values , authorization) => async dispatch => {
+    dispatch({ type: START_LOADING })
 
-//     EditAccount(userId , values , authorization).then(({ data }) => {
+    EditAccount(userId , values , authorization).then(({ data }) => {
 
-//         if (!data.err) {
-//             dispatch({ type: STOP_LOADING })
-//             dispatch({
-//                 type: PROFILE
-//             })
-//             dispatch({ type: CLEAR_MESSAGE})
-//             dispatch({ type: SHOW_SUCCESS_MESSAGE, payload : "edited" })
+        if (!data.err) {
+            dispatch({ type: STOP_LOADING })
+            dispatch({
+                type: EDITE
+            })
+            dispatch({ type: CLEAR_MESSAGE})
+            dispatch({ type: SHOW_SUCCESS_MESSAGE, payload : "edited" })
             
+            setLocalStorage("user" , {...getLocalStorage("user") , ...values})
 
-//             setLocalStorage("user" , {...getLocalStorage("user") , ...values})
-
-//         } else {
+        } else {
             
-//             dispatch({ type: STOP_LOADING })
-//             dispatch({ type: SHOW_ERROR_MESSAGE, payload: data.msg })
-//         }
+            dispatch({ type: STOP_LOADING })
+            dispatch({ type: SHOW_ERROR_MESSAGE, payload: data.msg })
+        }
 
-//        // console.log(data);
+      //  console.log(data);
 
-//     }).catch(err => {
-//         console.log("get orders api err ", err);
-//         dispatch({ type: STOP_LOADING })
-//         dispatch({ type: SHOW_ERROR_MESSAGE, payload: "something went wrong please try again" })
+    }).catch(err => {
+        console.log("get orders api err ", err);
+        dispatch({ type: STOP_LOADING })
+        dispatch({ type: SHOW_ERROR_MESSAGE, payload: "something went wrong please try again" })
 
-//     })
-// }
+    })
+}
 
 
-// const updateImageProfile = (userId , values , authorization) => async dispatch => {
-//     dispatch({ type: START_LOADING })
+const updateImageProfile = (userId , values , authorization) => async dispatch => {
+    dispatch({ type: START_LOADING })
 
-//     Image(userId , values , authorization).then(({ data }) => {
+    Image(userId , values , authorization).then(({ data }) => {
 
-//         if (!data.err) {
-//             dispatch({ type: STOP_LOADING })
-//             dispatch({
-//                 type: ADDRESS
-//             })
-//             dispatch({ type: CLEAR_MESSAGE})
-//             console.log(data.msg);
-//             setLocalStorage("user" ,{...getLocalStorage("user") , image : data.msg })
-//             dispatch({ type: SHOW_SUCCESS_MESSAGE, payload : "updated" })
+        if (!data.err) {
+            dispatch({ type: STOP_LOADING })
+            dispatch({ type: CLEAR_MESSAGE})
+            console.log(data.msg);
+            setLocalStorage("user" ,{...getLocalStorage("user") , image : data.msg })
+            dispatch({ type: SHOW_SUCCESS_MESSAGE, payload : "updated" })
 
-//         } else {
+        } else {
             
-//             dispatch({ type: STOP_LOADING })
-//             dispatch({ type: SHOW_ERROR_MESSAGE, payload: data.msg })
-//         }
+            dispatch({ type: STOP_LOADING })
+            dispatch({ type: SHOW_ERROR_MESSAGE, payload: data.msg })
+        }
 
-//      //   console.log(data);
+      //  console.log(data);
 
-//     }).catch(err => {
-//         console.log("get orders api err ", err);
-//         dispatch({ type: STOP_LOADING })
-//         dispatch({ type: SHOW_ERROR_MESSAGE, payload: "something went wrong please try again" })
+    }).catch(err => {
+        console.log("get orders api err ", err);
+        dispatch({ type: STOP_LOADING })
+        dispatch({ type: SHOW_ERROR_MESSAGE, payload: "something went wrong please try again" })
 
-//     })
-// }
+    })
+}
 
 export {
-    get_user_Count ,get_user_Count_pag , get_admins , LoginAuths , ForgotAuths
+    get_user_Count ,get_user_Count_pag , get_admins , LoginAuths , ForgotAuths , updateImageProfile , EditAccounts
 }
 

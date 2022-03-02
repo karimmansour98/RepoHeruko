@@ -8,7 +8,7 @@ import { loader } from "../../../shared/elements"
 import { useDispatch, useSelector } from "react-redux";
 import { CLEAR_MESSAGE } from "../../../redux/constans/message"
 import "../../../styles/login.css"
-import { ForgotAuths, LoginAuths } from "../../../redux/actions/user";
+import { LoginAuths } from "../../../redux/actions/user";
 
 const Login = () => {
     const navigate = useNavigate() 

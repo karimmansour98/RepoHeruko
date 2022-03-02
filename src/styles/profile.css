@@ -16,6 +16,7 @@
   margin: auto;
   border: 1px solid #ccc;
   margin-top: 20px;
+  border: 1px solid #2196f3;
 }
 .pform .title{
   font-size: 25px;
@@ -142,10 +143,9 @@ form .rule-details .rule-title{
    letter-spacing: 1px;
    cursor: pointer;
    transition: all 0.3s ease;
-   background: linear-gradient(135deg, #71b7e6, #9b59b6);
+   background-color: #2196f3;
  }
  form .button input:hover{
-  /* transform: scale(0.99); */
   background: linear-gradient(-135deg, #71b7e6, #9b59b6);
   }
 @media(max-width: 584px) {
@@ -158,8 +158,8 @@ form .rule-details .rule-title{
     }
 
     .content form .user-details {
-        max-height: 300px;
-        overflow-y: scroll;
+        /* max-height: 300px;
+        overflow-y: scroll; */
     }
     .user-details::-webkit-scrollbar {
         width: 5px;
