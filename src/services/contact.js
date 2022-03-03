@@ -8,6 +8,7 @@ const config = {
 }
 
 const Create = async (data ) => {
+  console.log(`${Host.BACKEND}${ApiEndpoints.contactEndpoints.route}${ApiEndpoints.contactEndpoints.create}`);
   return  await  axios.post(`${Host.BACKEND}${ApiEndpoints.contactEndpoints.route}${ApiEndpoints.contactEndpoints.create}` 
   , data , { headers :  {...config.headers } })
 } 
