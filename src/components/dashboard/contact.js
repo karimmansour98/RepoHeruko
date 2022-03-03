@@ -42,7 +42,7 @@ const Contacts = () => {
     useEffect(() => {
           const skip = Pages.currentPage == 1 ? 0 : ((Pages.currentPage - 1) * limit)
         dispatch(get_contact_Count_pag({ filter : '{"name" : { "$ne": "xxxlxxx" }}' }  , authorization))
-        dispatch(get_all_contacts({ filter : '{"name" : { "$ne": "xxxlxxx" }}'  , limit  , skip , sort : '{"fullname" : 1}'}  , authorization))
+        dispatch(get_all_contacts({ filter : '{"name" : { "$ne": "xxxlxxx" }}'  , limit  , skip , sort : '{"_id" : -1}'}  , authorization))
     }, [dispatch , Pages.currentPage])
 
     useEffect(() => {
@@ -97,7 +97,7 @@ const Contacts = () => {
 
 
    
-   const limit = 5
+   const limit = 2
  
 
    const paginations = []
