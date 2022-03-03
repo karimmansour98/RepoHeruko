@@ -47,7 +47,7 @@ const Header = (props) => {
    }
 
    const toggleSubMenu = (e) => {
-      if (e.target.className.includes("bx-collection"))
+      if (e.target.className.includes("fa-user"))
          e.target.parentElement.parentElement.classList.toggle("active")
       else e.target.parentElement.classList.toggle("active")
   }
@@ -116,7 +116,7 @@ const Header = (props) => {
                   <div className="profile-details">
 
                      <div className="profile-content">
-                        <img src={ImageLink(user.image._id)} alt="profileImg" />
+                        <img src={user && user.image && ImageLink(user.image._id)} alt="profileImg" />
                      </div>
 
                      <div className="name-job">
