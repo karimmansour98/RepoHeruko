@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect, useState } from "react"
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { isAuthentication} from '../../shared/auth';
 import { useDispatch, useSelector } from "react-redux";
 import "../../styles/main.css";
@@ -89,16 +89,19 @@ const Main = () => {
                 <div className="cardbox">
 
                    {ContactN && contactN &&
-                        <div className="card">
-                            <div>
-                                <span>{ContactN}</span>
-                                <p>Contacts</p>
-                            </div>
-                            <div className="icon">
-                               <i className="fa-solid fa-file-signature"></i>
+                        <Link to="/admin/contacts">
+                            <div className="card">
+                                <div>
+                                    <span>{ContactN}</span>
+                                    <p>Contacts</p>
+                                </div>
+                                <div className="icon">
+                                    <i className="fa-solid fa-file-signature"></i>
 
+                                </div>
                             </div>
-                        </div>
+                        </Link>
+                        
                     }
                 </div>
 

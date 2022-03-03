@@ -10,7 +10,7 @@ import { getLocalStorage } from "../../shared/localStorage";
 import { ImageLink } from "../../shared/funs";
 
 
-const Header = (props) => {
+const Header = () => {
    const navigate = useNavigate();
 
    useEffect(() => { 
