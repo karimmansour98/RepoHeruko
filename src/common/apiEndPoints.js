@@ -2,7 +2,7 @@
 const Host = {
   ROOT: "http://localhost:3000",
   //BACKEND: "http://localhost:3001",
-  BACKEND: "http:43.198.185.136",
+  BACKEND: "http//:43.198.185.136",
   PREFIX: "/v1/api", 
 };
 
