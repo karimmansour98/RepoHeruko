@@ -12,19 +12,11 @@ const EditAccount = async (id , data , con) => {
 }
 
 
-const List = async (filter , con) => {
-    return  await  axios.get(`${Host.BACKEND}${ApiEndpoints.UserEndpoints.route}${ApiEndpoints.UserEndpoints.list}` , { headers : {...config.headers , ...con } , params : {...filter} } )
-}
-
-const Count = async ( filter , con ) => {
-    return  await  axios.get(`${Host.BACKEND}${ApiEndpoints.UserEndpoints.route}${ApiEndpoints.UserEndpoints.count}`, { headers : {...config.headers , ...con } , params : {...filter} } )
-}
-
 const Image = async (id , data , con) => {
     return  await  axios.put(`${Host.BACKEND}${ApiEndpoints.UserEndpoints.route}${ApiEndpoints.UserEndpoints.image}/${id}`, data , { headers : {...config.headers , ...con} } )
 }
 
   
 export {
-    Count , List  , Image , EditAccount
+     Image , EditAccount
 }

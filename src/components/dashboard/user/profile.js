@@ -96,7 +96,7 @@ const Profile = () => {
 
             {loading && loader()}
 
-            <div className="title">Registration</div>
+            <div className="title">Profile</div>
 
             <div className="image-profile">
                 <div>

@@ -6,7 +6,6 @@ import Login from "./dashboard/user/login";
 import Main from "./dashboard/main";
 import Profile from "./dashboard/user/profile";
 import Contacts from "./dashboard/contact";
-import Admins from "./dashboard/user/admins";
 import Forgot from "./dashboard/user/forgot";
 import Index from "./index/index";
 
@@ -38,7 +37,6 @@ const App = () => {
                 <Route path="/" element={<Main />} />
 
                 <Route path="/contacts" element={<Contacts />} />
-                <Route path="/admins" element={<Admins />} />
                 <Route path="/profile" element={<Profile />} />
               </Routes>
 

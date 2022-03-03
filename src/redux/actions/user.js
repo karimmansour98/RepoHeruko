@@ -1,69 +1,12 @@
 
-import { COUNT , COUNT_PAG, FORGOT, GET, LOGIN , EDITE } from "../constans/user"
+import { FORGOT, LOGIN , EDITE } from "../constans/user"
 import { SHOW_ERROR_MESSAGE, SHOW_SUCCESS_MESSAGE, CLEAR_MESSAGE } from "../constans/message"
 import { START_LOADING, STOP_LOADING } from "../constans/loading"
-import { Count , List , Image, EditAccount } from "../../services/user"
+import { Image, EditAccount } from "../../services/user"
 import { ForgotAuth, LoginAuth } from "../../services/auth"
 import { setAuthentication } from "../../shared/auth"
 import { getLocalStorage, setLocalStorage } from "../../shared/localStorage"
 
-
-const get_user_Count_pag = (filter , con) => async dispatch => {
-    dispatch({ type: START_LOADING })
-    Count(filter , con).then(({ data }) => {
-
-            dispatch({ type: STOP_LOADING })
-            dispatch({
-                type: COUNT_PAG , payload : data.msg
-            })
-            dispatch({ type: CLEAR_MESSAGE })
-
-
-    }).catch(err => {
-        console.log("get orders api err ", err);
-        dispatch({ type: STOP_LOADING })
-
-    })
-}
-
-
-const get_user_Count = (filter , con) => async dispatch => {
-    dispatch({ type: START_LOADING })
-    Count(filter , con).then(({ data }) => {
-
-            dispatch({ type: STOP_LOADING })
-            dispatch({
-                type: COUNT , payload : data.msg
-            })
-            dispatch({ type: CLEAR_MESSAGE })
-
-    }).catch(err => {
-        console.log("get orders api err ", err);
-        dispatch({ type: STOP_LOADING })
-
-    })
-}
-
-
-const get_admins = (filter , con) => async dispatch => {
-    dispatch({ type: START_LOADING })
-    List(filter , con).then(({ data }) => {
-
-            dispatch({ type: STOP_LOADING })
-            dispatch({
-                type: GET , payload : data.msg
-            })
-            dispatch({ type: CLEAR_MESSAGE })
-
-
-    }).catch(err => {
-        console.log("get orders api err ", err);
-        dispatch({ type: STOP_LOADING })
-        dispatch({ type: SHOW_ERROR_MESSAGE, payload: "something went wrong please try again" })
-
-
-    })
-}
 
 
 const LoginAuths = (values) => async dispatch => {
@@ -161,7 +104,7 @@ const updateImageProfile = (userId , values , authorization) => async dispatch =
         if (!data.err) {
             dispatch({ type: STOP_LOADING })
             dispatch({ type: CLEAR_MESSAGE})
-            console.log(data.msg);
+          //  console.log(data.msg);
             setLocalStorage("user" ,{...getLocalStorage("user") , image : data.msg })
             dispatch({ type: SHOW_SUCCESS_MESSAGE, payload : "updated" })
 
@@ -182,6 +125,6 @@ const updateImageProfile = (userId , values , authorization) => async dispatch =
 }
 
 export {
-    get_user_Count ,get_user_Count_pag , get_admins , LoginAuths , ForgotAuths , updateImageProfile , EditAccounts
+     LoginAuths , ForgotAuths , updateImageProfile , EditAccounts
 }
 

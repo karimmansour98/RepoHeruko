@@ -1,11 +1,10 @@
 import React, { Fragment, useEffect, useState } from "react"
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
-import { isAuthentication, Logout } from '../../shared/auth';
+import { isAuthentication} from '../../shared/auth';
 import { useDispatch, useSelector } from "react-redux";
 import "../../styles/main.css";
 import { CLEAR_MESSAGE } from "../../redux/constans/message";
-import { get_user_Count } from "../../redux/actions/user";
 import { delete_contact, get_contact, get_contact_Count, view_contact } from "../../redux/actions/contact";
 import { getCookie } from "../../shared/cookie";
 import { loader } from "../../shared/elements";
@@ -23,7 +22,6 @@ const Main = () => {
 
     const [Contacts , setContacts] = useState(0)
     const [ContactN , setContactN] = useState(0)
-    const [AdminN , setAdminsN] = useState(0)
     const [showDel , setshowDel] = useState(false)
     const [Contact , setContact] = useState({})
 
@@ -31,22 +29,19 @@ const Main = () => {
     const { t } = useTranslation();
     
     const { loading } = useSelector(state => state.loading)
-    const { count : userN } = useSelector(state => state.user)
     const { count : contactN , contacts } = useSelector(state => state.contact)
 
    const authorization = isAuthentication() ? { "Authorization": `bearer ${getCookie("token")}` } : [{ _id: "" }]
 
     useEffect(() => {
-        dispatch(get_user_Count( { filter : '{"name" : { "$ne": "xxxlxxx" }}' }  , authorization)) 
         dispatch(get_contact_Count( { filter : '{"name" : { "$ne": "xxxlxxx" }}' } , authorization))       
         dispatch(get_contact( { filter : '{"name" : { "$ne": "xxxlxxx" }}' , limit : 10} , authorization))   
     }, [dispatch])
 
     useEffect(() => {
-       setAdminsN(userN)
        setContactN(contactN)
        setContacts(contacts)
-    }, [userN , contactN , contacts])
+    }, [ contactN , contacts])
 
  
    const viewContact = (id, contact) => {
@@ -92,21 +87,6 @@ const Main = () => {
             {showDel && View()}
 
                 <div className="cardbox">
-
-                    {AdminN && userN &&
-                        <div className="card">
-                            <div>
-                                <span>{userN}</span>
-                                <p>Users</p>
-                            </div>
-                            <div className="icon">
-                                <i className="fa-solid fa-user"></i>
-
-                            </div>
-                        </div>
-                    }
-                   
-
 
                    {ContactN && contactN &&
                         <div className="card">

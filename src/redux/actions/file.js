@@ -23,7 +23,7 @@ const set_single_image = (image , authorization , id) => async dispatch => {
             dispatch({ type: STOP_LOADING })
             dispatch({ type: SHOW_ERROR_MESSAGE, payload: data.msg })
         }
-          console.log(data);
+        //  console.log(data);
 
     }).catch(err => {
         console.log("get orders api err ", err);

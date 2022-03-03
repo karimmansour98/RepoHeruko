@@ -97,7 +97,7 @@ const Contacts = () => {
 
 
    
-   const limit = 3
+   const limit = 5
  
 
    const paginations = []

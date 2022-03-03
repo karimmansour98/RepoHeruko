@@ -6,6 +6,8 @@ import { useDispatch, useSelector } from "react-redux";
 import  "../../styles/header.css";
 import { get_contact_Count_nav } from "../../redux/actions/contact";
 import { getCookie } from "../../shared/cookie";
+import { getLocalStorage } from "../../shared/localStorage";
+import { ImageLink } from "../../shared/funs";
 
 
 const Header = (props) => {
@@ -28,6 +30,7 @@ const Header = (props) => {
    const { count_nav  } = useSelector(state => state.contact)
 
    const authorization = isAuthentication() ? { "Authorization": `bearer ${getCookie("token")}` } : [{ _id: "" }]
+   const user = localStorage.getItem("user") ? getLocalStorage("user") : [{ _id: "" }]
 
    useEffect(() => {
        dispatch(get_contact_Count_nav( { filter : '{ "viewed" : false }' } , authorization))       
@@ -56,8 +59,8 @@ const Header = (props) => {
          <aside className="close">
 
             <div className="brand">
-               <i className='bx bxl-c-plus-plus'></i>
-               <span>CodingLab</span>
+                        <i className="fa-solid fa-database"></i>
+                           <span>CP</span>
             </div>
 
             <ul className="menu">
@@ -67,7 +70,7 @@ const Header = (props) => {
 
                <li>
                   <Link to="/admin">
-                     <i className='bx bx-grid-alt'></i>
+                     <i className="fa-solid fa-chart-line"></i>
                      <span className="link_name">Dashboard</span>
                   </Link>
 
@@ -75,8 +78,8 @@ const Header = (props) => {
 
                <li>
                   <Link to="/admin/contacts">
-                     <i className='bx bx-grid-alt'></i>
-                     <span className="link_name">Contacts</span>
+                   <i className="fa-solid fa-id-card"></i>
+                   <span className="link_name">Contacts</span>
                   </Link>
 
                </li>
@@ -86,16 +89,15 @@ const Header = (props) => {
                <li className="has-sub-menu" onClick={(e) => {toggleSubMenu(e)}}>
 
                   <a href="#">
-                     <i className='bx bx-collection'></i>
+                     <i className="fa-solid fa-user"></i>
                      <span className="link_name">Admin</span>
                   </a>
-                  <i className='bx bxs-chevron-down arrow'></i>
+                  <i className="fa-solid fa-chevron-down arrow"></i>
 
                   {/* <!-- sub menu --> */}
                   <ul className="sub-menu">
                      <li><a className="link_name" href="#">Admin</a></li>
                      <li><Link to="/admin/profile">Profile</Link></li>
-                     <li><Link to="/admin/admins">Admins</Link></li>
                      <li><button className="dropdown-item" style={{all : "unset" , color : "#fff" , cursor : "pointer"}} onClick={() => {
                         Logout(() => {
                            navigate("/admin/login")
@@ -114,15 +116,18 @@ const Header = (props) => {
                   <div className="profile-details">
 
                      <div className="profile-content">
-                        <img src="https://cdn-icons-png.flaticon.com/512/147/147140.png" alt="profileImg" />
+                        <img src={ImageLink(user.image._id)} alt="profileImg" />
                      </div>
 
                      <div className="name-job">
-                        <div className="profile_name">Amraoui</div>
-                        <div className="job">Web Desginer</div>
+                        <div className="profile_name">{user.firstname}{" "}{user.lastname}</div>
                      </div>
 
-                     <i className='bx bx-log-out'></i>
+                     <i className='fa-solid fa-arrow-right-from-bracket' onClick={() => {
+                        Logout(() => {
+                           navigate("/admin/login")
+                        })
+                     }}></i>
 
                   </div>
                </li>
@@ -138,16 +143,15 @@ const Header = (props) => {
 
 
          <header>
-
-            <i className='bx bx-menu sw-menu' onClick={(e) => {toggleSide(e)}}></i>
+            <i className="fa-solid fa-list sw-menu" onClick={(e) => {toggleSide(e)}}></i>
 
             <div className="extra">
 
 
 
                <div className="notifications">
-                  <i className="far fa-bell"></i>
-                  <span>{Contact}</span>
+                     <i className="fa-solid fa-bell"></i>
+                     <span>{Contact}</span>
                </div>
 
 
