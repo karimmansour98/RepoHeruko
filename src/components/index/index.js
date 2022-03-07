@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom"
 import * as yup from 'yup'
 import { Field, Formik, Form } from "formik"
 import { loader } from "../../shared/elements"
+import myLocations from "../../shared/locations"
 import { useDispatch, useSelector } from "react-redux";
 import { CLEAR_MESSAGE } from "../../redux/constans/message"
 import "../../styles/index.css"
@@ -17,6 +18,7 @@ const Index = () => {
   const { t, i18n } = useTranslation();
 
   const [Franchise , setFranchise] = useState({touch : false , sub : false})
+  const [Addresses, setAddresses] = useState([])
 
   useEffect(() => {
     dispatch({ type: CLEAR_MESSAGE })
@@ -87,6 +89,25 @@ option.addEventListener("click", () => {
       } >{t("OK")}</button>
     </div></Fragment>
 
+const handleAddress = (e) => {
+  const npa = parseInt(e.target.value)
+
+  let adds = []
+
+  for (const locs in myLocations) {
+    if (adds.length >= 10) break
+
+    for (const loc of myLocations[locs]["stateCities"]) {
+
+      if (adds.length >= 10) break
+      if (loc.npa.toString().startsWith(npa))  adds.push(loc)
+    }
+  }
+
+  setAddresses(adds)
+
+}
+
 
     return (
 
@@ -112,8 +133,8 @@ option.addEventListener("click", () => {
                   <ul>
                     <li className="nav-icon" onClick={() => {i18n.changeLanguage("en")}}><img src="imgs/united-states.png" alt="" /></li>
                     <li className="nav-icon" onClick={() => {i18n.changeLanguage("fr")}}><img src="imgs/france.png" alt="" /></li>
-                    {/* <li className="nav-icon"><img src="imgs/germany.png" alt="" /></li>
-                    <li className="nav-icon"><img src="imgs/italy.png" alt="" /></li> */}
+                    <li className="nav-icon" onClick={() => {i18n.changeLanguage("de")}}><img src="imgs/germany.png" alt="" /></li>
+                    <li className="nav-icon" onClick={() => {i18n.changeLanguage("it")}}><img src="imgs/italy.png" alt="" /></li> 
                   </ul>
                 </div>
         
@@ -232,11 +253,22 @@ option.addEventListener("click", () => {
                           <div className="input-field">
                             <label htmlFor="">{t("postcode or home address")}*</label>
                             <div>
-                             <Field autoComplete="new-npa" type="tel" name="npa" placeholder={t("Enter your postcode or home address")} required="" />
+                             <Field onKeyUp={(e) => { handleAddress(e) }} list="addresses" autoComplete="new-npa" type="tel" name="npa" placeholder={t("Enter your postcode or home address")} required="" />
                              <i className="fa-solid fa-envelopes-bulk"></i>                           </div>
                             <small className="input-error" style={{color: "tomato" , display: errors.npa ? "block" : "none" }} >{touched.npa && errors.npa}</small>
                           </div>
                         </div>
+
+
+                        <datalist id="addresses">
+                          {
+                            Addresses.map((address, adi) => {
+                              return (
+                                <option key={adi}>{`${address.label}`}</option>
+                              )
+                            })
+                          }
+                        </datalist>
 
                         <div className="input-wrapper">
                           <div className="input-field">

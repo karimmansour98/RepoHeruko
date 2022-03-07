@@ -33,9 +33,10 @@ const Main = () => {
 
    const authorization = isAuthentication() ? { "Authorization": `bearer ${getCookie("token")}` } : [{ _id: "" }]
 
+
     useEffect(() => {
         dispatch(get_contact_Count( { filter : '{"name" : { "$ne": "xxxlxxx" }}' } , authorization))       
-        dispatch(get_contact( { filter : '{"name" : { "$ne": "xxxlxxx" }}' , limit : 10} , authorization))   
+        dispatch(get_contact( { filter : '{"name" : { "$ne": "xxxlxxx" }}' , limit : 10 , sort : '{"_id" : -1}'} , authorization))   
     }, [dispatch])
 
     useEffect(() => {
