@@ -428,8 +428,8 @@ const handleAddress = (e) => {
                   <div className="line">
                     <i className="fas fa-phone-volume fa-fw"></i>
                     <div className="info">
-                      <span>Whatsapp</span>
-                      <span><a href="https://wa.me/+33748636215" target="_blank">+33 748636215</a></span>
+                      <span>Whatsapp :</span>
+                      <span><a className="lienWhatsapp" href="https://wa.me/+33748636215" target="_blank">+33 748636215</a></span>
                     </div>
                   </div>
                 </div>
